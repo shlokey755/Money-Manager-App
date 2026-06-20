@@ -1,6 +1,6 @@
 /**
- * FilterManager.js
- * Reads and manages the filter/sort controls in the UI.
+ * FilterManager.js — Improved
+ * Reads and manages the filter/sort controls safely.
  */
 export class FilterManager {
   constructor(onChange) {
@@ -17,30 +17,45 @@ export class FilterManager {
   }
 
   _bindEvents() {
-    [this.categoryEl, this.subCategoryEl, this.dateFromEl, this.dateToEl, this.sortByEl]
-      .forEach(el => el.addEventListener('change', () => this._onChange(this.getFilters())));
+    const elements = [this.categoryEl, this.subCategoryEl, this.dateFromEl, this.dateToEl, this.sortByEl];
+    
+    // Safely look through elements that exist in the DOM
+    elements.forEach(el => {
+      if (el) {
+        el.addEventListener('change', () => {
+          if (typeof this._onChange === 'function') {
+            this._onChange(this.getFilters());
+          }
+        });
+      }
+    });
 
-    this.resetBtn.addEventListener('click', () => this.reset());
+    if (this.resetBtn) {
+      this.resetBtn.addEventListener('click', () => this.reset());
+    }
   }
 
   /** @returns {Object} current filter state */
   getFilters() {
     return {
-      category:    this.categoryEl.value,
-      subCategory: this.subCategoryEl.value,
-      dateFrom:    this.dateFromEl.value,
-      dateTo:      this.dateToEl.value,
-      sortBy:      this.sortByEl.value,
+      category:    this.categoryEl ? this.categoryEl.value : 'all',
+      subCategory: this.subCategoryEl ? this.subCategoryEl.value : 'all',
+      dateFrom:    this.dateFromEl ? this.dateFromEl.value : '',
+      dateTo:      this.dateToEl ? this.dateToEl.value : '',
+      sortBy:      this.sortByEl ? this.sortByEl.value : 'date-desc',
     };
   }
 
   /** Reset all filters to defaults */
   reset() {
-    this.categoryEl.value    = 'all';
-    this.subCategoryEl.value = 'all';
-    this.dateFromEl.value    = '';
-    this.dateToEl.value      = '';
-    this.sortByEl.value      = 'date-desc';
-    this._onChange(this.getFilters());
+    if (this.categoryEl)    this.categoryEl.value    = 'all';
+    if (this.subCategoryEl) this.subCategoryEl.value = 'all';
+    if (this.dateFromEl)    this.dateFromEl.value    = '';
+    if (this.dateToEl)      this.dateToEl.value      = '';
+    if (this.sortByEl)      this.sortByEl.value      = 'date-desc';
+    
+    if (typeof this._onChange === 'function') {
+      this._onChange(this.getFilters());
+    }
   }
 }
