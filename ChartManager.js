@@ -1,28 +1,36 @@
 /**
- * ChartManager.js
- * Manages Chart.js bar and pie charts for the dashboard.
+ * ChartManager.js — Improved
+ * Manages Chart.js bar and pie charts safely with global context fallbacks.
  */
 export class ChartManager {
   constructor() {
     this._barChart  = null;
     this._pieChart  = null;
 
-    // Common chart defaults (dark theme)
-    Chart.defaults.color = '#8a8790';
-    Chart.defaults.font.family = "'Syne', sans-serif";
-    Chart.defaults.font.size   = 12;
+    // Resolve Chart from the global window object explicitly to bypass ES Module namespace issues
+    const GlobalChart = window.Chart;
 
-    this._initBarChart();
-    this._initPieChart();
+    if (!GlobalChart) {
+      console.warn("ChartManager: Chart.js dependency was not found globally. Charts will be disabled.");
+      return;
+    }
+
+    // Common chart defaults (dark theme) using the resolved global reference
+    GlobalChart.defaults.color = '#8a8790';
+    GlobalChart.defaults.font.family = "'Syne', sans-serif";
+    GlobalChart.defaults.font.size   = 12;
+
+    this._initBarChart(GlobalChart);
+    this._initPieChart(GlobalChart);
   }
 
   // ── Bar Chart: Income vs Expenses ────────────────────────────
 
-  _initBarChart() {
+  _initBarChart(GlobalChart) {
     const ctx = document.getElementById('barChart');
     if (!ctx) return;
 
-    this._barChart = new Chart(ctx, {
+    this._barChart = new GlobalChart(ctx, {
       type: 'bar',
       data: {
         labels: ['Income', 'Expenses'],
@@ -65,11 +73,11 @@ export class ChartManager {
 
   // ── Pie Chart: Expense Breakdown ─────────────────────────────
 
-  _initPieChart() {
+  _initPieChart(GlobalChart) {
     const ctx = document.getElementById('pieChart');
     if (!ctx) return;
 
-    this._pieChart = new Chart(ctx, {
+    this._pieChart = new GlobalChart(ctx, {
       type: 'doughnut',
       data: {
         labels:   [],
