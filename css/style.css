@@ -1,5 +1,5 @@
 /* ============================================================
-   VAULT — MONEY MANAGER  |  style.css (Enhanced Layout)
+   VAULT — MONEY MANAGER  |  style.css (Centered & Fully Responsive)
    Design: Dark luxury finance — charcoal + champagne gold
    ============================================================ */
 
@@ -36,7 +36,7 @@
   --transition:  0.15s cubic-bezier(0.4,0,0.2,1);
 }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   background: var(--bg);
@@ -45,6 +45,7 @@ body {
   font-size: 13.5px;
   line-height: 1.5;
   min-height: 100vh;
+  overflow-x: hidden;
   background-image:
     radial-gradient(ellipse 60% 40% at 80% 10%, rgba(201,168,76,0.04) 0%, transparent 60%),
     radial-gradient(ellipse 40% 30% at 20% 90%, rgba(76,175,138,0.03) 0%, transparent 50%);
@@ -129,6 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
 }
 
 /* ── SUMMARY CARDS ── */
@@ -136,6 +138,7 @@ body {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
+  width: 100%;
 }
 .summary-card {
   background: var(--bg2);
@@ -188,28 +191,31 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
+  width: 100%;
 }
 .chart-card {
   background: var(--bg2);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 18px;
+  display: flex;
+  flex-direction: column;
 }
 .chart-title {
   font-family: var(--font-display);
   font-size: 15px;
   font-weight: 600;
   color: var(--text-secondary);
-  margin-bottom: 12px;
+  margin-bottom: 8px;
   letter-spacing: 0.01em;
 }
 .chart-wrap {
   position: relative;
-  height: 180px;
+  height: 160px;
   display: flex;
   align-items: center;
   justify-content: center;
-  max-width: 90%;
+  max-width: 100%;
   margin: 0 auto;
 }
 
@@ -219,6 +225,7 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 14px 18px;
+  width: 100%;
 }
 .filter-row {
   display: flex;
@@ -290,6 +297,7 @@ body {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  width: 100%;
 }
 .table-header-row {
   display: flex;
@@ -312,7 +320,7 @@ body {
   border-radius: 12px;
   border: 1px solid var(--border);
 }
-.table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.table-wrapper { width: 100%; }
 .tx-table { width: 100%; border-collapse: collapse; }
 .tx-table th {
   background: var(--bg3);
@@ -385,6 +393,7 @@ body {
   padding: 40px 16px;
   color: var(--text-muted);
   gap: 8px;
+  text-align: center;
 }
 .empty-state.visible { display: flex; }
 .empty-icon { font-size: 30px; color: var(--border-light); }
@@ -601,77 +610,132 @@ body {
 .toast.error   { border-color: var(--red);   color: var(--red); }
 
 /* ============================================================
-   ── RESPONSIVE & MOBILE-STACKING OVERRIDES ──
+   ── RESPONSIVE RESPONSIVE INTERFACE & CENTERED LAYOUTS ──
    ============================================================ */
 
 @media (max-width: 900px) {
-  /* Break global grid components down into simple vertical block arrays */
   .summary-section {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 12px;
   }
+  .summary-card {
+    text-align: center;
+    padding: 20px;
+  }
+  .summary-card {
+    border-left: none;
+  }
+  .income-card  { border-bottom: 3px solid var(--green); }
+  .expense-card { border-bottom: 3px solid var(--red); }
+  .balance-card { border-bottom: 3px solid var(--gold); }
+
   .charts-section {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 16px;
+  }
+  .chart-card {
+    text-align: center;
+    align-items: center;
+    padding: 20px;
   }
 }
 
 @media (max-width: 768px) {
-  /* Force filter tools to collapse into distinct vertical rows */
+  .header-inner {
+    flex-direction: column;
+    height: auto;
+    padding: 14px 16px;
+    gap: 12px;
+    text-align: center;
+  }
+  .header-actions {
+    width: 100%;
+    justify-content: center;
+  }
   .filter-row {
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
+    gap: 14px;
+  }
+  .filter-group {
+    text-align: center;
   }
   .btn-reset-filter {
-    align-self: stretch;
+    align-self: center;
+    width: 100%;
+    max-width: 200px;
     text-align: center;
     justify-content: center;
     padding: 8px;
+  }
+
+  /* CRITICAL UI RECONSTRUCTION: 
+     Transforms data tables into clean centered, scroll-free blocks on mobile screens */
+  .table-header-row {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+    padding: 16px;
+  }
+  .tx-table, .tx-table thead, .tx-table tbody, .tx-table th, .tx-table td, .tx-table tr {
+    display: block;
+    width: 100%;
+  }
+  .tx-table thead {
+    display: none; /* Hide header rows safely */
+  }
+  .tx-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+  }
+  .tx-table td {
+    padding: 0;
+    border: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  .tx-desc {
+    max-width: 100%;
+    white-space: normal;
+  }
+  .tx-actions {
+    margin-top: 6px;
+    justify-content: center;
+    width: 100%;
+  }
+  .btn-edit, .btn-delete {
+    padding: 6px 16px;
+    font-size: 12px;
+    flex: 1;
+    max-width: 120px;
   }
 }
 
 @media (max-width: 480px) {
   .app-main {
-    padding: 12px 8px 40px;
-    gap: 14px;
-  }
-  .header-inner {
-    height: 50px;
-    padding: 0 10px;
+    padding: 12px 12px 40px;
+    gap: 16px;
   }
   .brand-name {
-    font-size: 18px;
-  }
-  .header-actions {
-    gap: 6px;
-  }
-  .btn-add {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-  .btn-csv {
-    padding: 6px 10px;
-    font-size: 12px;
+    font-size: 20px;
   }
   .card-amount {
-    font-size: 24px;
+    font-size: 26px;
   }
   .modal {
-    padding: 16px;
+    padding: 20px 16px;
   }
-  .tx-table td, .tx-table th {
-    padding: 8px 6px;
-    font-size: 12px;
-  }
-  .tx-desc {
-    max-width: 90px;
-  }
-  .tx-actions {
-    gap: 4px;
-  }
-  .btn-edit, .btn-delete {
-    padding: 4px 6px;
-    font-size: 11px;
+  .radio-group {
+    justify-content: center;
   }
 }
