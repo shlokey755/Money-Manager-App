@@ -1,9 +1,14 @@
 /**
- * StorageManager.js
- * Handles all localStorage read/write operations.
+ * StorageManager.js — Improved
+ * Handles all localStorage read/write operations with repository-path isolation.
  */
 export class StorageManager {
-  static STORAGE_KEY = 'vault_transactions';
+  // Generates a unique key specific to this repository path (e.g., "vault_transactions_/vault-money-manager/")
+  // This prevents localData pollution if you host multiple apps under your github.io domain.
+  static get STORAGE_KEY() {
+    const namespace = window.location.pathname.replace(/\/$/, ""); 
+    return `vault_transactions_${namespace || 'root'}`;
+  }
 
   /**
    * Load raw transaction objects from localStorage.
@@ -27,8 +32,9 @@ export class StorageManager {
    */
   static save(transactions) {
     try {
+      if (!Array.isArray(transactions)) return;
       const data = transactions.map(tx =>
-        typeof tx.toJSON === 'function' ? tx.toJSON() : tx
+        (tx && typeof tx.toJSON === 'function') ? tx.toJSON() : tx
       );
       localStorage.setItem(StorageManager.STORAGE_KEY, JSON.stringify(data));
     } catch (err) {
