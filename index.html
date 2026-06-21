@@ -3,6 +3,96 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- ───────────── PWA META TAGS & HEAD ELEMENTS ────────────────── -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--
+    Add these lines to your index.html <head> section.
+    These enable PWA features and improve mobile support.
+-->
+
+<!-- ───────────── MANIFEST LINK (REQUIRED) ──────────── -->
+<link rel="manifest" href="/manifest.json">
+
+<!-- ───────────── VIEWPORT META TAG (UPDATE YOUR EXISTING ONE) ──────────── -->
+<!-- Replace your existing viewport meta tag with this one -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+
+<!-- ───────────── THEME & STATUS BAR COLORS ──────────── -->
+<meta name="theme-color" content="#1a1a2e">
+<meta name="msapplication-TileColor" content="#1a1a2e">
+
+<!-- ───────────── APPLE MOBILE WEB APP SUPPORT ──────────── -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Vault">
+<link rel="apple-touch-icon" href="/icon-192.png">
+
+<!-- ───────────── ANDROID CHROME SUPPORT ──────────── -->
+<meta name="mobile-web-app-capable" content="yes">
+
+<!-- ───────────── FAVICON ──────────── -->
+<link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png">
+
+<!-- ───────────── WINDOWS TILE ICON (OPTIONAL) ──────────── -->
+<meta name="msapplication-config" content="/browserconfig.xml">
+
+<!-- ───────────── APP SHORTCUTS FOR HOME SCREEN (OPTIONAL) ──────────── -->
+<!-- These are already defined in manifest.json, but adding here for redundancy -->
+
+<!-- ───────────── DISABLE PINCH-ZOOM BUT ALLOW USER ZOOM ON FORM FOCUS ──────────── -->
+<!-- Already set in viewport meta tag above with user-scalable=no -->
+
+<!-- ───────────── PREVENT PHONE NUMBER DETECTION (OPTIONAL) ──────────── -->
+<meta name="format-detection" content="telephone=no">
+
+<!-- ───────────── PREVENT EMAIL DETECTION (OPTIONAL) ──────────── -->
+<meta name="format-detection" content="email=no">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+
+<!-- COMPLETE UPDATED HEAD SECTION EXAMPLE -->
+<!-- 
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
+  <title>Vault — Money Manager</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/style.css" />
+  
+  <!-- External Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a1a2e">
+  <meta name="msapplication-TileColor" content="#1a1a2e">
+  
+  <!-- Apple Mobile Web App Support -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Vault">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+  
+  <!-- Android Chrome Support -->
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icon-192.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icon-192.png">
+  
+  <!-- Format Detection -->
+  <meta name="format-detection" content="telephone=no">
+  <meta name="format-detection" content="email=no">
+</head>
+-->
   <title>Vault — Money Manager</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
