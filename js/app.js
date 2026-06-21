@@ -12,6 +12,47 @@
  *     └── ExportManager       (CSV export)
  */
 
+// service-worker-registration.js
+// Add this code to your app.js OR as a separate script in your HTML
+
+// ═══ Service Worker Registration ═══
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('✓ Service Worker registered successfully!', registration);
+        
+        // Optional: Listen for updates
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'activated') {
+              console.log('✓ New Service Worker activated!');
+              // Optional: Show a "refresh" prompt to the user
+              // location.reload();
+            }
+          });
+        });
+      })
+      .catch((error) => {
+        console.warn('✗ Service Worker registration failed:', error);
+      });
+  });
+} else {
+  console.warn('Service Workers are not supported in this browser.');
+}
+
+// ═══ Optional: Detect Installation ═══
+window.addEventListener('beforeinstallprompt', (event) => {
+  console.log('✓ Install prompt is available!');
+  // You could customize the install prompt here if desired
+  // event.preventDefault(); // Prevent automatic prompt
+});
+
+window.addEventListener('appinstalled', () => {
+  console.log('✓ App was installed!');
+});
+
 import { TransactionManager } from './TransactionManager.js';
 import { UIManager }           from './UIManager.js';
 import { ChartManager }        from './ChartManager.js';
